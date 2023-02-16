@@ -8,50 +8,64 @@ function random_item(items) {
 let a = random_item(items);
 let b = random_item(items);
 let c = a + b;
+let dealer = random_item(items) + random_item(items);
 
-function factual() {
+function startgame() {
   console.log(a);
   console.log(b);
   console.log(c);
-  if (c > 21) {
-    console.log(`You lose`);
-  } else if (c === 21) {
-    console.log("You Win");
+  if (c === 21) {
+    console.log(`You win`);
   } else {
     DOMSelectors.box.insertAdjacentHTML(
       "beforeend",
       `
-        <button class="frrr">Remove</button>
-  
-    `
+      <button class="frrr">Hit</button>
+      <button class="word">Stand</button>
+  `
     );
   }
 }
-// function something() {
-//   let fax = document.querySelectorAll(".frrr");
-//   fax.forEach((easy) => {
-//     easy.addEventListener("click", function () {
-//       let d = random_item(items);
-//       let e = c + d;
 
-//       if (e >= 21) {
-//         console.log(`You win`);
-//       } else {
-//         DOMSelectors.box.insertAdjacentHTML(
-//           "beforeend",
-//           `
-//           <button class="frrr">Remove</button>
+function Stand() {
+  let eeeee = document.querySelector(".word");
+  eeeee.addEventListener("click", function () {
+    if (dealer > c) {
+      console.log("you lose");
+    } else if (dealer === c) {
+      console.log("tie");
+    } else {
+      console.log("you win");
+    }
+  });
+}
 
-//       `
-//         );
-//       }
-//     });
-//   });
-// }
+function Addnumber() {
+  let fax = document.querySelector(".frrr");
+
+  fax.addEventListener("click", function () {
+    let d = random_item(items);
+    let e = c + d;
+    console.log(d);
+    console.log(e);
+    if (e > 21) {
+      console.log(`You lose`);
+    } else if (e === 21) {
+      console.log("You Win");
+    } else {
+      DOMSelectors.box.insertAdjacentHTML(
+        "beforeend",
+        `
+            <button class="frrr">aedga</button>
+      
+        `
+      );
+    }
+  });
+}
 
 DOMSelectors.button.addEventListener("click", function () {
-  while (c < 21) {
-    factual();
-    // something();
-  }
+  startgame();
+  Stand();
+  Addnumber();
 });
