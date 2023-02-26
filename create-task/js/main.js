@@ -1,5 +1,6 @@
 import { DOMSelectors } from "./dom";
 import { items } from "./array";
+import { dealer } from "./array";
 
 function random_item(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -8,7 +9,9 @@ function random_item(items) {
 let a = random_item(items);
 let b = random_item(items);
 let c = a + b;
-let dealer = random_item(items) + random_item(items);
+let x = random_item(dealer)
+
+
 
 function startgame() {
   console.log(a);
@@ -30,7 +33,8 @@ function startgame() {
 function Stand() {
   let eeeee = document.querySelector(".word");
   eeeee.addEventListener("click", function () {
-    if (dealer > c) {
+    console.log(x)
+    if (x > c) {
       console.log("you lose");
     } else if (dealer === c) {
       console.log("tie");
@@ -41,6 +45,7 @@ function Stand() {
 }
 
 function Addnumber() {
+
   let fax = document.querySelector(".frrr");
 
   fax.addEventListener("click", function () {
@@ -56,13 +61,17 @@ function Addnumber() {
       DOMSelectors.box.insertAdjacentHTML(
         "beforeend",
         `
-            <button class="frrr">aedga</button>
+        <button class="frrr">Hit</button>
+        <button class="word">Stand</button>
       
         `
       );
     }
   });
 }
+
+
+
 
 DOMSelectors.button.addEventListener("click", function () {
   startgame();
