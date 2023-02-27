@@ -61,13 +61,33 @@ function Addnumber() {
       DOMSelectors.box.insertAdjacentHTML(
         "beforeend",
         `
-        <button class="frrr">Hit</button>
+        <button class="xddd">Hit</button>
         <button class="word">Stand</button>
       
         `
       );
     }
   });
+}
+
+function Hitagain(){
+  let amongus = document.querySelector(".xddd")
+  amongus.addEventListener("click", function(){
+    function* shuffle(array) {
+
+      var i = array.length;
+    
+      while (i--) {
+          yield array.splice(Math.floor(Math.random() * (i+1)), 1)[0];
+      }
+    
+    }
+    var ranNums = shuffle([1,2,3,4,5,6,7,8,9,10]);
+    
+    ranNums.next().value;    // first random number from array
+    ranNums.next().value;    // second random number from array
+    ranNums.next().value;    // etc.
+  })
 }
 
 
@@ -77,4 +97,5 @@ DOMSelectors.button.addEventListener("click", function () {
   startgame();
   Stand();
   Addnumber();
+  Hitagain();
 });
