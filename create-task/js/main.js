@@ -73,25 +73,24 @@ function Addnumber() {
 function Hitagain(){
   let amongus = document.querySelector(".xddd")
   amongus.addEventListener("click", function(){
-    function* shuffle(array) {
-
-      var i = array.length;
     
-      while (i--) {
-          yield array.splice(Math.floor(Math.random() * (i+1)), 1)[0];
-      }
-    
-    }
-    var ranNums = shuffle([1,2,3,4,5,6,7,8,9,10]);
-    
-    ranNums.next().value;    // first random number from array
-    ranNums.next().value;    // second random number from array
-    ranNums.next().value;    // etc.
   })
 }
 
 
 
+function street() {
+  var x=Math.floor(Math.random()*2 + 1);
+  var z=document.getElementById("test")
+  if (x == 1) {
+      alert('This should add 1');
+      z.innerhtml = z + 1
+  }
+  else if (x == 2) {
+      alert('This should add 2');
+      z.innerhtml = z + 1;
+  }
+}
 
 DOMSelectors.button.addEventListener("click", function () {
   startgame();
