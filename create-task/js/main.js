@@ -1,100 +1,160 @@
 import { DOMSelectors } from "./dom";
-import { items } from "./array";
-import { dealer } from "./array";
+import { deck } from "./array";
 
-function random_item(items) {
-  return items[Math.floor(Math.random() * items.length)];
+
+function shuffleDeck(deck) {
+  deck.sort(() => 0.5 - Math.random());
 }
 
-let a = random_item(items);
-let b = random_item(items);
-let c = a + b;
-let x = random_item(dealer)
+
+function dealCard() {
+  return deck.pop();
+}
+
+function calculateHand(hand) {
+  let total = 0;
+  let aces = 0;
+  for (let card of hand) {
+    if (card === "A") {
+      aces++;
+      total += 11;
+    } else if (card === "K" || card === "Q" || card === "J") {
+      total += 10;
+    } else {
+      total += parseInt(card);
+    }
+  }
+  while (aces > 0 && total > 21) {
+    total -= 10;
+    aces--;
+  }
+  return total;
+}
+
+
+let playerHand = [];
+let dealerHand = [];
 
 
 
-function startgame() {
-  console.log(a);
-  console.log(b);
-  console.log(c);
-  if (c === 21) {
-    console.log(`You win`);
-  } else {
+shuffleDeck(deck);
+
+
+playerHand.push(dealCard());
+dealerHand.push(dealCard());
+playerHand.push(dealCard());
+dealerHand.push(dealCard());
+
+
+
+
+  part1();
+
+function part1() {
+  DOMSelectors.button.addEventListener("click", function () {
+   
+    DOMSelectors.button.remove();
+
     DOMSelectors.box.insertAdjacentHTML(
       "beforeend",
-      `
-      <button class="frrr">Hit</button>
-      <button class="word">Stand</button>
-  `
+      `<div> 
+      <h1 class="hello">Player's hand:  ${playerHand.join(
+        ", "
+      )} (${calculateHand(playerHand)}) </h1>
+   <h2>Dealer's hand: ${dealerHand[0]} , ?<p>
+   
+   </div>
+    <button class="Hit">Hit</button>
+    <button id="Stand" >Stand</button>
+    `
     );
-  }
+
+    Hit();
+    Stand();
+  });
+}
+
+
+function Hit() {
+  let total = calculateHand(playerHand);
+  let addcard = document.querySelector(".Hit");
+  addcard.addEventListener("click", function () {
+    let num = playerHand.push(dealCard());
+    if (calculateHand(playerHand) > 21) {
+      total += num;
+      let newElement = document.createElement("h1");
+      newElement.textContent = `Player's hand:  ${playerHand.join(
+        ", "
+      )} (${calculateHand(playerHand)}) `;
+      DOMSelectors.box.querySelector("h1").replaceWith(newElement);
+      setTimeout(function () {
+        alert("You Lose and The Dealer Wins!");
+      }, 1);  createButton();
+    } else {
+      total += num;
+      let newElement = document.createElement("h1");
+      newElement.textContent = `Player's hand:  ${playerHand.join(
+        ", "
+      )} (${calculateHand(playerHand)}) `;
+      DOMSelectors.box.querySelector("h1").replaceWith(newElement);
+    }
+  
+  });
 }
 
 function Stand() {
-  let eeeee = document.querySelector(".word");
-  eeeee.addEventListener("click", function () {
-    console.log(x)
-    if (x > c) {
-      console.log("you lose");
-    } else if (dealer === c) {
-      console.log("tie");
-    } else {
-      console.log("you win");
+  let getanswer = document.querySelector("#Stand");
+  getanswer.addEventListener("click", function () {
+    while (calculateHand(dealerHand) < 17) {
+      dealerHand.push(dealCard());
     }
-  });
-}
+    let newElement = document.createElement("h2");
+    newElement.textContent = `Dealers's hand:  ${dealerHand.join(
+      ", "
+    )} (${calculateHand(dealerHand)}) `;
+    DOMSelectors.box.querySelector("h2").replaceWith(newElement);
 
-function Addnumber() {
-
-  let fax = document.querySelector(".frrr");
-
-  fax.addEventListener("click", function () {
-    let d = random_item(items);
-    let e = c + d;
-    console.log(d);
-    console.log(e);
-    if (e > 21) {
-      console.log(`You lose`);
-    } else if (e === 21) {
-      console.log("You Win");
+    let playerTotal = calculateHand(playerHand);
+    let dealerTotal = calculateHand(dealerHand);
+    if (dealerTotal > 21) {
+      setTimeout(function () {
+        alert("Dealer busts! Player wins.");
+      }, 1);
+    } else if (playerTotal > dealerTotal) {
+      setTimeout(function () {
+        alert("Player wins!");
+      }, 1);
+    } else if (dealerTotal > playerTotal) {
+      setTimeout(function () {
+        alert("Dealer wins.");
+      }, 1);
     } else {
-      DOMSelectors.box.insertAdjacentHTML(
-        "beforeend",
-        `
-        <button class="xddd">Hit</button>
-        <button class="word">Stand</button>
-      
-        `
-      );
+      setTimeout(function () {
+        alert("It's a tie!");
+      }, 1);
+  
     }
-  });
-}
+    createButton();
 
-function Hitagain(){
-  let amongus = document.querySelector(".xddd")
-  amongus.addEventListener("click", function(){
-    
+  });
+
+}
+function createButton() {
+  var button = document.createElement("button");
+  button.innerHTML = "Start Over";
+  document.body.appendChild(button);
+
+  button.addEventListener("click", function() {
+    location.reload();
   })
+  
 }
 
 
 
-function street() {
-  var x=Math.floor(Math.random()*2 + 1);
-  var z=document.getElementById("test")
-  if (x == 1) {
-      alert('This should add 1');
-      z.innerhtml = z + 1
-  }
-  else if (x == 2) {
-      alert('This should add 2');
-      z.innerhtml = z + 1;
-  }
-}
 
-DOMSelectors.button.addEventListener("click", function () {
-  startgame();
-  Stand();
-  Addnumber();
-  Hitagain();
-});
+
+
+
+
+ 
