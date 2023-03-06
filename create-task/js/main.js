@@ -1,11 +1,9 @@
 import { DOMSelectors } from "./dom";
 import { deck } from "./array";
 
-
 function shuffleDeck(deck) {
   deck.sort(() => 0.5 - Math.random());
 }
-
 
 function dealCard() {
   return deck.pop();
@@ -31,37 +29,29 @@ function calculateHand(hand) {
   return total;
 }
 
-
 let playerHand = [];
 let dealerHand = [];
 
-
-
 shuffleDeck(deck);
 
-
 playerHand.push(dealCard());
 dealerHand.push(dealCard());
 playerHand.push(dealCard());
 dealerHand.push(dealCard());
 
+Game();
 
-
-
-  part1();
-
-function part1() {
+function Game() {
   DOMSelectors.button.addEventListener("click", function () {
-   
     DOMSelectors.button.remove();
 
     DOMSelectors.box.insertAdjacentHTML(
       "beforeend",
       `<div> 
-      <h1 class="hello">Player's hand:  ${playerHand.join(
+      <h2 class="hello">Player's hand:  ${playerHand.join(
         ", "
-      )} (${calculateHand(playerHand)}) </h1>
-   <h2>Dealer's hand: ${dealerHand[0]} , ?<p>
+      )} (${calculateHand(playerHand)}) </h2>
+   <h3>Dealer's hand: ${dealerHand[0]} , ?<p>
    
    </div>
     <button class="Hit">Hit</button>
@@ -74,7 +64,6 @@ function part1() {
   });
 }
 
-
 function Hit() {
   let total = calculateHand(playerHand);
   let addcard = document.querySelector(".Hit");
@@ -82,23 +71,23 @@ function Hit() {
     let num = playerHand.push(dealCard());
     if (calculateHand(playerHand) > 21) {
       total += num;
-      let newElement = document.createElement("h1");
+      let newElement = document.createElement("h2");
       newElement.textContent = `Player's hand:  ${playerHand.join(
         ", "
       )} (${calculateHand(playerHand)}) `;
-      DOMSelectors.box.querySelector("h1").replaceWith(newElement);
+      DOMSelectors.box.querySelector("h2").replaceWith(newElement);
       setTimeout(function () {
         alert("You Lose and The Dealer Wins!");
-      }, 1);  createButton();
+      }, 1);
+      createButton();
     } else {
       total += num;
-      let newElement = document.createElement("h1");
+      let newElement = document.createElement("h2");
       newElement.textContent = `Player's hand:  ${playerHand.join(
         ", "
       )} (${calculateHand(playerHand)}) `;
-      DOMSelectors.box.querySelector("h1").replaceWith(newElement);
+      DOMSelectors.box.querySelector("h2").replaceWith(newElement);
     }
-  
   });
 }
 
@@ -108,11 +97,9 @@ function Stand() {
     while (calculateHand(dealerHand) < 17) {
       dealerHand.push(dealCard());
     }
-    let newElement = document.createElement("h2");
-    newElement.textContent = `Dealers's hand:  ${dealerHand.join(
-      ", "
-    )} (${calculateHand(dealerHand)}) `;
-    DOMSelectors.box.querySelector("h2").replaceWith(newElement);
+    let newElement = document.createElement("h3");
+    newElement.textContent = `Dealers's hand:  ${dealerHand.join(", ")} (${calculateHand(dealerHand)}) `;
+    DOMSelectors.box.querySelector("h3").replaceWith(newElement);
 
     let playerTotal = calculateHand(playerHand);
     let dealerTotal = calculateHand(dealerHand);
@@ -132,29 +119,16 @@ function Stand() {
       setTimeout(function () {
         alert("It's a tie!");
       }, 1);
-  
     }
     createButton();
-
   });
-
 }
 function createButton() {
   var button = document.createElement("button");
   button.innerHTML = "Start Over";
   document.body.appendChild(button);
 
-  button.addEventListener("click", function() {
+  button.addEventListener("click", function () {
     location.reload();
-  })
-  
+  });
 }
-
-
-
-
-
-
-
-
- 
